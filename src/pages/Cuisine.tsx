@@ -3,24 +3,15 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
-type Cuisine = {
-  id: number;
-  title: string;
-  image: string;
-};
-
-type GetCuisineResponse = {
-  results: Cuisine[];
-};
+import { GetResultsResponse, Recipe } from '../config';
 
 const Cuisine = () => {
-  const [cuisine, setCuisine] = useState<Cuisine[]>([]);
+  const [cuisine, setCuisine] = useState<Recipe[]>([]);
   const { type } = useParams();
 
   const getCuisine = async (name: string | undefined) => {
     try {
-      const { data } = await axios.get<GetCuisineResponse>(
+      const { data } = await axios.get<GetResultsResponse<Recipe>>(
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_RECIPE_KEY}&cuisine=${name}`
       );
       setCuisine(data.results);

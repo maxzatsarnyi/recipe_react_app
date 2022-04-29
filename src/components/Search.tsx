@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FormEvent, useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

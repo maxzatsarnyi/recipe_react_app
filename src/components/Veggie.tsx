@@ -4,16 +4,7 @@ import styled from 'styled-components';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import { Link } from 'react-router-dom';
-
-type Recipe = {
-  id: number;
-  title: string;
-  image: string;
-};
-
-type GetVeggieResponse = {
-  recipes: Recipe[];
-};
+import { GetRecipesResponse, Recipe } from '../config';
 
 export const Veggie = () => {
   const [veggie, setVeggie] = useState<Recipe[]>([]);
@@ -26,7 +17,7 @@ export const Veggie = () => {
         return;
       }
 
-      const { data } = await axios.get<GetVeggieResponse>(
+      const { data } = await axios.get<GetRecipesResponse<Recipe>>(
         `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_RECIPE_KEY}&number=9&tags=vegetarian`
       );
 

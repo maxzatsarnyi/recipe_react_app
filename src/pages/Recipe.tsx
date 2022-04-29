@@ -12,6 +12,11 @@ type Detail = {
   extendedIngredients: { id: number; original: string }[];
 };
 
+enum InfoType {
+  INSTRUCTIONS = 'INSTRUCTIONS',
+  INGREDIENTS = 'INGREDIENTS',
+}
+
 const Recipe = () => {
   const [details, setDetails] = useState<Detail>({
     id: 0,
@@ -21,7 +26,9 @@ const Recipe = () => {
     instructions: '',
     extendedIngredients: [],
   });
-  const [activeTab, setActiveTab] = useState<string>('instructions');
+  const [activeTab, setActiveTab] = useState<InfoType>(
+    'INSTRUCTIONS' as InfoType
+  );
   const { name } = useParams();
 
   const getDetails = async () => {
@@ -54,24 +61,24 @@ const Recipe = () => {
       </div>
       <Info>
         <Button
-          className={activeTab === 'instructions' ? 'active' : ''}
-          onClick={() => setActiveTab('instructions')}
+          className={activeTab === InfoType.INSTRUCTIONS ? 'active' : ''}
+          onClick={() => setActiveTab(InfoType.INSTRUCTIONS)}
         >
           Instructions
         </Button>
         <Button
-          className={activeTab === 'ingredients' ? 'active' : ''}
-          onClick={() => setActiveTab('ingredients')}
+          className={activeTab === InfoType.INGREDIENTS ? 'active' : ''}
+          onClick={() => setActiveTab(InfoType.INGREDIENTS)}
         >
           Ingredients
         </Button>
-        {activeTab === 'instructions' && (
+        {activeTab === InfoType.INSTRUCTIONS && (
           <div>
             <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>
             <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
           </div>
         )}
-        {activeTab === 'ingredients' && (
+        {activeTab === InfoType.INGREDIENTS && (
           <ul>
             {details.extendedIngredients.map((ing) => (
               <li key={ing.id}>{ing.original}</li>

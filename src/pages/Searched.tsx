@@ -2,16 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
-type Recipe = {
-  id: number;
-  title: string;
-  image: string;
-};
-
-type GetSearchedResponse = {
-  results: Recipe[];
-};
+import { GetResultsResponse, Recipe } from '../config';
 
 const Searched = () => {
   const [searched, setSearched] = useState<Recipe[]>([]);
@@ -19,7 +10,7 @@ const Searched = () => {
 
   const getSearched = async (name: string | undefined) => {
     try {
-      const { data } = await axios.get<GetSearchedResponse>(
+      const { data } = await axios.get<GetResultsResponse<Recipe>>(
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_RECIPE_KEY}&query=${name}`
       );
       setSearched(data?.results);
